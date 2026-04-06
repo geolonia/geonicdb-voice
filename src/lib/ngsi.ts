@@ -24,11 +24,6 @@ function getDB(): GeonicDBInstance {
   }))
 }
 
-export async function getVersion(): Promise<void> {
-  const res = await fetch(`${GEONICDB_URL}/version`)
-  if (!res.ok) throw new Error(`GET /version failed: ${res.status}`)
-}
-
 export async function createSurveyResponse(data: SurveyFormData): Promise<void> {
   const db = getDB()
   await db.createEntity({

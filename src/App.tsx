@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
-  getVersion,
   createSurveyResponse,
 } from './lib/ngsi.ts'
 import {
@@ -20,27 +19,11 @@ const INITIAL_FORM: SurveyFormData = {
 }
 
 function App() {
-  const [connected, setConnected] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<SurveyFormData>(INITIAL_FORM)
   const [fieldErrors, setFieldErrors] = useState<ValidationErrors>({})
-
-  const fetchVersion = useCallback(async () => {
-    try {
-      await getVersion()
-      setConnected(true)
-    } catch {
-      setConnected(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    fetchVersion()
-    const interval = setInterval(fetchVersion, 10000)
-    return () => clearInterval(interval)
-  }, [fetchVersion])
 
   const updateField = (field: keyof SurveyFormData, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -74,22 +57,11 @@ function App() {
 
   return (
     <div className="app">
-      <header className="header">
-        <h1>アンケートフォーム</h1>
-        <div className="status">
-          {connected ? (
-            <span className="status-online">GeonicDB</span>
-          ) : (
-            <span className="status-offline">GeonicDB: 接続中...</span>
-          )}
-        </div>
-      </header>
-
       {error && <div className="error">{error}</div>}
       {success && <div className="success">{success}</div>}
 
       <section className="survey-form">
-        <h2>アンケート</h2>
+        <h1 style={{ marginBottom: '2rem' }}>アンケート</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">氏名</label>
