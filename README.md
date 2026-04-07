@@ -99,15 +99,17 @@ geonic me policies create '{
   "ruleCombiningAlgorithm": "first-applicable",
   "target": {
     "resources": [
-      { "attributeId": "path", "matchValue": "/ngsi-ld/v1/entities*", "matchFunction": "glob" },
-      { "attributeId": "entityType", "matchValue": "SurveyResponse" }
+      { "attributeId": "path", "matchValue": "/ngsi-ld/v1/entities*", "matchFunction": "glob" }
     ]
   },
   "rules": [
     {
-      "ruleId": "allow-post",
+      "ruleId": "allow-post-survey",
       "effect": "Permit",
       "target": {
+        "resources": [
+          { "attributeId": "entityType", "matchValue": "SurveyResponse" }
+        ],
         "actions": [{ "attributeId": "method", "matchValue": "POST" }]
       }
     },
