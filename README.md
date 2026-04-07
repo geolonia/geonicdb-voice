@@ -120,11 +120,7 @@ geonic me policies create '{
 ポリシーをバインドした API キーを発行する。
 
 ```bash
-geonic me api-keys create \
-  --name survey-demo \
-  --origins http://localhost:5173 \
-  --policy survey-write \
-  --dpop-required
+geonic me api-keys create '{"name":"survey-demo","policyId":"survey-write","allowedOrigins":["*"],"dpopRequired":true}'
 ```
 
 発行された API キーを `index.html` の `data-api-key` に設定する。
