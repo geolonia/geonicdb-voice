@@ -2,6 +2,16 @@
 
 GeonicDB の Custom Data Models と書き込み専用 API キーを使ったシンプルなアンケートフォーム。フォームから送信されたデータは GeonicDB に NGSI-LD エンティティとして保存される。API キーには書き込み権限のみを付与し、データの読み取りはできない。
 
+## 利用している GeonicDB の機能
+
+| 機能 | 説明 |
+|------|------|
+| Custom Data Models | `SurveyResponse` モデルを定義し、サーバーサイドでバリデーションを実行 |
+| NGSI-LD API | `POST /ngsi-ld/v1/entities` でアンケート回答をエンティティとして保存 |
+| API キー | 書き込み専用の API キーをフロントエンドに埋め込みデータ送信 |
+| ポリシー (ABAC) | `SurveyResponse` の `POST` のみを許可するポリシーで API キーの権限を制限 |
+| DPoP バインド | API キーに DPoP を必須化し、トークンの不正利用を防止 |
+
 ## 前提条件
 
 - Node.js 20 以上
