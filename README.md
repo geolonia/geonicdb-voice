@@ -122,19 +122,21 @@ geonic me policies create '{
 ```bash
 geonic me api-keys create \
   --name survey-demo \
-  --origins http://localhost:5173 \
+  --origins http://localhost:8080,https://geolonia.github.io \
   --policy survey-write \
   --dpop-required
 ```
 
-発行された API キーを `index.html` の `data-api-key` に設定する。
+発行された API キーを `.env` に設定する。
 
-```html
-<script
-  src="https://geonicdb.geolonia.com/sdk/v1/geonicdb.js"
-  data-api-key="ここにAPIキーを設定"
-  data-tenant="miya">
-</script>
+```bash
+cp .env.example .env
+```
+
+```dotenv
+VITE_GEONICDB_URL=https://geonicdb.geolonia.com
+VITE_GEONICDB_API_KEY=ここにAPIキーを設定
+VITE_GEONICDB_TENANT=あなたのテナント名
 ```
 
 ### 6. 開発サーバーの起動
