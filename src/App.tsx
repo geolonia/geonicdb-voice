@@ -92,7 +92,7 @@ function App() {
             <input
               id="birthDate"
               type="date"
-              max={new Date().toISOString().slice(0, 10)}
+              max={(() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })()}
               value={form.birthDate}
               onChange={(e) => updateField('birthDate', e.target.value)}
             />
