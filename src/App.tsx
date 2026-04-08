@@ -92,6 +92,7 @@ function App() {
             <input
               id="birthDate"
               type="date"
+              max={new Date().toISOString().slice(0, 10)}
               value={form.birthDate}
               onChange={(e) => updateField('birthDate', e.target.value)}
             />
