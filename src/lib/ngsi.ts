@@ -31,7 +31,7 @@ export async function createSurveyResponse(data: SurveyFormData): Promise<void> 
     type: 'SurveyResponse',
     name: { type: 'Property', value: data.name.trim() },
     email: { type: 'Property', value: data.email.trim() },
-    age: { type: 'Property', value: Number(data.age) },
+    birthDate: { type: 'Property', value: data.birthDate.trim() },
     prefecture: { type: 'Property', value: data.prefecture },
     inquiry: { type: 'Property', value: data.inquiry.trim() },
   })

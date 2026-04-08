@@ -3,7 +3,7 @@ import { PREFECTURES } from './prefectures.ts'
 export interface SurveyFormData {
   name: string
   email: string
-  age: string
+  birthDate: string
   prefecture: string
   inquiry: string
 }
@@ -11,7 +11,7 @@ export interface SurveyFormData {
 export interface ValidationErrors {
   name?: string
   email?: string
-  age?: string
+  birthDate?: string
   prefecture?: string
   inquiry?: string
 }
@@ -37,15 +37,27 @@ export function validateSurveyForm(data: SurveyFormData): ValidationErrors {
     errors.email = '有効なメールアドレスを入力してください'
   }
 
-  // 年齢
-  if (!data.age.trim()) {
-    errors.age = '年齢を入力してください'
+  // 生年月日
+  if (!data.birthDate.trim()) {
+    errors.birthDate = '生年月日を入力してください'
+  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(data.birthDate)) {
+    errors.birthDate = '生年月日はYYYY-MM-DD形式で入力してください'
   } else {
-    const ageNum = Number(data.age)
-    if (!Number.isInteger(ageNum)) {
-      errors.age = '年齢は整数で入力してください'
-    } else if (ageNum < 0 || ageNum > 150) {
-      errors.age = '年齢は0〜150の範囲で入力してください'
+    const [year, month, day] = data.birthDate.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    if (
+      Number.isNaN(date.getTime()) ||
+      date.getFullYear() !== year ||
+      date.getMonth() !== month - 1 ||
+      date.getDate() !== day
+    ) {
+      errors.birthDate = '有効な日付を入力してください'
+    } else {
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      if (date > today) {
+        errors.birthDate = '生年月日は今日以前の日付を入力してください'
+      }
     }
   }
 
