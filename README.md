@@ -47,7 +47,8 @@ geonic models create '{
       "example": "山田太郎",
       "required": true,
       "description": "氏名",
-      "validation": { "minLength": 1, "maxLength": 100 }
+      "validation": { "minLength": 1, "maxLength": 100 },
+      "@context": "https://schema.org/name"
     },
     "email": {
       "ngsiType": "Property",
@@ -58,15 +59,17 @@ geonic models create '{
       "validation": {
         "pattern": "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}$",
         "maxLength": 254
-      }
+      },
+      "@context": "https://schema.org/email"
     },
-    "age": {
+    "birthDate": {
       "ngsiType": "Property",
-      "valueType": "number",
-      "example": 30,
+      "valueType": "string",
+      "example": "1990-01-15",
       "required": true,
-      "description": "年齢",
-      "validation": { "minimum": 0, "maximum": 150 }
+      "description": "生年月日",
+      "validation": { "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+      "@context": "https://schema.org/birthDate"
     },
     "prefecture": {
       "ngsiType": "Property",

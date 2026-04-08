@@ -13,7 +13,7 @@ import { PREFECTURES } from './lib/prefectures.ts'
 const INITIAL_FORM: SurveyFormData = {
   name: '',
   email: '',
-  age: '',
+  birthDate: '',
   prefecture: '',
   inquiry: '',
 }
@@ -88,17 +88,14 @@ function App() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="age">年齢</label>
+            <label htmlFor="birthDate">生年月日</label>
             <input
-              id="age"
-              type="number"
-              min="0"
-              max="150"
-              value={form.age}
-              onChange={(e) => updateField('age', e.target.value)}
-              placeholder="30"
+              id="birthDate"
+              type="date"
+              value={form.birthDate}
+              onChange={(e) => updateField('birthDate', e.target.value)}
             />
-            {fieldErrors.age && <span className="field-error">{fieldErrors.age}</span>}
+            {fieldErrors.birthDate && <span className="field-error">{fieldErrors.birthDate}</span>}
           </div>
 
           <div className="form-group">
