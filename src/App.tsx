@@ -18,6 +18,15 @@ const INITIAL_FORM: SurveyFormData = {
   inquiry: '',
 }
 
+/** 今日の日付を YYYY-MM-DD 形式で返す（date input の max 属性用） */
+function todayString(): string {
+  const d = new Date()
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
 function App() {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -71,6 +80,7 @@ function App() {
               value={form.name}
               onChange={(e) => updateField('name', e.target.value)}
               placeholder="山田太郎"
+              disabled={loading}
             />
             {fieldErrors.name && <span className="field-error">{fieldErrors.name}</span>}
           </div>
@@ -83,6 +93,7 @@ function App() {
               value={form.email}
               onChange={(e) => updateField('email', e.target.value)}
               placeholder="taro@example.com"
+              disabled={loading}
             />
             {fieldErrors.email && <span className="field-error">{fieldErrors.email}</span>}
           </div>
@@ -92,9 +103,10 @@ function App() {
             <input
               id="birthDate"
               type="date"
-              max={(() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; })()}
+              max={todayString()}
               value={form.birthDate}
               onChange={(e) => updateField('birthDate', e.target.value)}
+              disabled={loading}
             />
             {fieldErrors.birthDate && <span className="field-error">{fieldErrors.birthDate}</span>}
           </div>
@@ -105,6 +117,7 @@ function App() {
               id="prefecture"
               value={form.prefecture}
               onChange={(e) => updateField('prefecture', e.target.value)}
+              disabled={loading}
             >
               <option value="">選択してください</option>
               {PREFECTURES.map((pref) => (
@@ -122,6 +135,7 @@ function App() {
               value={form.inquiry}
               onChange={(e) => updateField('inquiry', e.target.value)}
               placeholder="お問い合わせ内容を入力してください"
+              disabled={loading}
             />
             {fieldErrors.inquiry && <span className="field-error">{fieldErrors.inquiry}</span>}
           </div>

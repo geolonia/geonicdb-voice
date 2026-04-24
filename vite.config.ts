@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     port: 8080,
     proxy: {
-      '/ngsi-ld': 'https://geonicdb.geolonia.com',
+      '/ngsi-ld': process.env.VITE_GEONICDB_URL || 'https://geonicdb.geolonia.com',
     },
   },
 })
