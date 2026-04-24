@@ -12,11 +12,16 @@ const GEONICDB_URL = ((import.meta.env.VITE_GEONICDB_URL as string) || '').repla
 const GEONICDB_API_KEY = (import.meta.env.VITE_GEONICDB_API_KEY as string) || ''
 const GEONICDB_TENANT = (import.meta.env.VITE_GEONICDB_TENANT as string) || ''
 
+// 必須の環境変数が設定されていない場合は早期にエラーを出す
+if (!GEONICDB_API_KEY) {
+  throw new Error('VITE_GEONICDB_API_KEY が設定されていません。.env ファイルを確認してください。')
+}
+
 let _db: GeonicDB | null = null
 
 function getDB(): GeonicDB {
   return _db ?? (_db = new GeonicDB({
-    apiKey: GEONICDB_API_KEY || undefined,
+    apiKey: GEONICDB_API_KEY,
     tenant: GEONICDB_TENANT || undefined,
     baseUrl: GEONICDB_URL || undefined,
   }))
