@@ -301,6 +301,14 @@ geonic config set url https://geonicdb.geolonia.com
 geonic auth login
 ```
 
+ログイン後、後の手順 5 で `.env` に設定する**テナント名**を控えておく。
+
+```bash
+geonic me -f json | jq -r '.tenantName'
+```
+
+> テナントには `tenantId`（UUID）と `tenantName`（文字列）の 2 つがあり、`.env` に必要なのは **`tenantName`** の方。UUID を設定すると全リクエストが 400 になる。
+
 ### 3. Custom Data Model の登録
 
 ```bash
@@ -435,8 +443,14 @@ cp .env.example .env
 ```dotenv
 VITE_GEONICDB_URL=https://geonicdb.geolonia.com
 VITE_GEONICDB_API_KEY=ここにAPIキーを設定
-VITE_GEONICDB_TENANT=あなたのテナント名
+VITE_GEONICDB_TENANT=ここにテナント名を設定
 ```
+
+| 変数 | 値の入手先 |
+|------|-----------|
+| `VITE_GEONICDB_URL` | 手順 2 で設定した GeonicDB サーバーの URL |
+| `VITE_GEONICDB_API_KEY` | この手順 5 の `create` が出力した `gdb_` で始まる文字列（**作成時にしか表示されない**。控え忘れたら `geonic me api-keys refresh <keyId>` で再発行する） |
+| `VITE_GEONICDB_TENANT` | 手順 2 で控えたテナント名（`geonic me -f json \| jq -r '.tenantName'`）。UUID の `tenantId` ではない |
 
 ### 6. 開発サーバーの起動
 
