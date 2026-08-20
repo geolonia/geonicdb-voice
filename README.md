@@ -291,7 +291,7 @@ GeonicDB は受信したリクエストを **2 層のサーバー側検証**で�
 ### 1. 依存パッケージのインストール
 
 ```bash
-npm install
+npm install -S @geolonia/geonicdb-sdk
 ```
 
 ### 2. GeonicDB の設定（geonic CLI）
